@@ -21,8 +21,10 @@ import android.view.Gravity
 import android.view.View.GONE
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
+import androidx.compose.animation.core.animate
+import androidx.compose.animation.core.animateSizeAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
@@ -32,7 +34,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -158,12 +163,12 @@ fun Hourglass(
         AndroidView({ customView }) { view ->
             with(view) {
                 setAnimation(R.raw.hourglass)
-                playAnimation()
                 repeatMode = LottieDrawable.RESTART
                 foregroundGravity = Gravity.CENTER
                 speed = 0.8f
                 repeatCount = count
                 elevation = 4f
+                playAnimation()
             }
         }
     }
@@ -176,7 +181,14 @@ fun RenderTimerUpdate(time: Int) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = time.toString(), modifier = Modifier.padding(10.dp), fontSize = 24.sp)
+        Text(
+            text = time.toString(),
+            modifier = Modifier
+                .padding(10.dp),
+            fontSize = 42.sp,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -208,7 +220,7 @@ fun TimeSelection(modifier: Modifier = Modifier, onSelection: (Pair<Int, Int>) -
                 .fillMaxWidth()
         )
         Button(
-            onClick = { onSelection(Pair(22, 60)) },
+            onClick = { onSelection(Pair(21, 60)) },
             content = { Text(text = "60") },
             modifier = modifier
                 .padding(10.dp)
